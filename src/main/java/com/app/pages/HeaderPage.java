@@ -9,15 +9,13 @@ import org.openqa.selenium.support.FindBy;
  * Created by Yuvarej on 28/05/2016.
  */
 @Page
-public class HeaderPage  {
-
+public class HeaderPage extends BasePage {
 
     @FindBy(id = "twotabsearchtextbox")
-    public WebElement searchBox;
+    private WebElement searchBox;
 
     @FindBy(xpath = "*[@id='nav-search-submit-text']/..")
-    public WebElement searchButton;
-
+    private WebElement searchButton;
 
     /**
      * types into the search box and submits the search

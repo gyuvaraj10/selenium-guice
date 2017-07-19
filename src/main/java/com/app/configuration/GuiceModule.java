@@ -1,6 +1,7 @@
 package com.app.configuration;
 
 import com.app.annotations.Step;
+import com.app.utils.PropertyMap;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -16,13 +17,10 @@ import cucumber.runtime.java.guice.ScenarioScoped;
 import org.openqa.selenium.WebDriver;
 import org.reflections.Reflections;
 import org.reflections.scanners.MethodAnnotationsScanner;
-import org.reflections.scanners.Scanner;
 import org.reflections.scanners.SubTypesScanner;
 import org.reflections.scanners.TypeAnnotationsScanner;
 import org.reflections.util.ConfigurationBuilder;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -85,16 +83,8 @@ public class GuiceModule extends AbstractModule implements InjectorSource {
         return steps;
     }
 
-
     private Properties getProperties() {
-        Properties properties = new Properties();
-        try {
-            properties.load(new FileInputStream(new File(this.getClass().getResource("/application.properties").getPath())));
-            return properties;
-        }
-        catch (Exception ex) {
-            return properties;
-        }
+        return PropertyMap.getInstance().getLoadedProperties();
     }
 
     @Override

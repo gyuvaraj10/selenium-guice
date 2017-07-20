@@ -5,6 +5,9 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.ios.IOSDriver;
+import io.appium.java_client.youiengine.YouiEngineDriver;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -37,6 +40,8 @@ public class DriverProvider implements Provider<WebDriver> {
 
     public WebDriver get() {
         DesiredCapabilities capability;
+        Properties properties = PropertyMap.getInstance().getProperties();
+        DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
         switch (browser.toLowerCase()) {
             case "chrome":  {
                 capability = DesiredCapabilities.chrome();
@@ -48,8 +53,6 @@ public class DriverProvider implements Provider<WebDriver> {
             }
             case "grid": {
                 try {
-                    Properties properties = PropertyMap.getInstance().getProperties();
-                    DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
                     properties.entrySet().forEach(entry -> {
                         if(entry.getKey().toString().contains(DESIRED_CAPABILITIES_KEY)) {
                             String key = entry.getKey().toString().split(DESIRED_CAPABILITIES_KEY)[1];
@@ -68,6 +71,45 @@ public class DriverProvider implements Provider<WebDriver> {
             case "ie": {
                 capability = DesiredCapabilities.internetExplorer();
                 return new InternetExplorerDriver(capability);
+            }
+            case "android": {
+                try {
+                    properties.entrySet().forEach(entry -> {
+                        if (entry.getKey().toString().contains(DESIRED_CAPABILITIES_KEY)) {
+                            String key = entry.getKey().toString().split(DESIRED_CAPABILITIES_KEY)[1];
+                            desiredCapabilities.setCapability(key, entry.getValue());
+                        }
+                    });
+                    return new AndroidDriver(new URL(gridUrl), desiredCapabilities);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+            case "ios" : {
+                try {
+                    properties.entrySet().forEach(entry -> {
+                        if (entry.getKey().toString().contains(DESIRED_CAPABILITIES_KEY)) {
+                            String key = entry.getKey().toString().split(DESIRED_CAPABILITIES_KEY)[1];
+                            desiredCapabilities.setCapability(key, entry.getValue());
+                        }
+                    });
+                    return new IOSDriver<>(new URL(gridUrl), desiredCapabilities);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+            case "youi" : {
+                try {
+                    properties.entrySet().forEach(entry -> {
+                        if (entry.getKey().toString().contains(DESIRED_CAPABILITIES_KEY)) {
+                            String key = entry.getKey().toString().split(DESIRED_CAPABILITIES_KEY)[1];
+                            desiredCapabilities.setCapability(key, entry.getValue());
+                        }
+                    });
+                    return new YouiEngineDriver<>(new URL(gridUrl), desiredCapabilities);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
             }
             default: {
                 capability = DesiredCapabilities.chrome();

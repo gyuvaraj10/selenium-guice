@@ -30,6 +30,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>io.appium</groupId>
+            <artifactId>java-client</artifactId>
+            <version>4.1.2</version>
+        </dependency>
+        <dependency>
             <groupId>apps.test.runner</groupId>
             <artifactId>generateRunner-maven-plugin</artifactId>
             <version>${runner.generator.version}</version>

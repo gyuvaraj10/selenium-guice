@@ -21,6 +21,11 @@
         <guice.version>4.1.0</guice.version>
         <reflections.version>0.9.10</reflections.version>
         <junit.version>4.11</junit.version>
+        <cucumber.report.version>3.9.0</cucumber.report.version>
+        <runner.generator.version>1.0</runner.generator.version>
+        <surefire.version>2.20</surefire.version>
+        <parallel.count>4</parallel.count>
+        <mvn.exec.version>1.5.0</mvn.exec.version>
     </properties>
 
     <dependencies>
@@ -62,7 +67,7 @@
         <dependency>
             <groupId>net.masterthought</groupId>
             <artifactId>cucumber-reporting</artifactId>
-            <version>3.9.0</version>
+            <version>${cucumber.report.version}</version>
         </dependency>
     </dependencies>
 
@@ -82,7 +87,7 @@
             <plugin>
                 <groupId>apps.test.runner</groupId>
                 <artifactId>generateRunner-maven-plugin</artifactId>
-                <version>1.0</version>
+                <version>${runner.generator.version}</version>
                 <executions>
                     <execution>
                         <phase>generate-test-sources</phase>
@@ -99,9 +104,9 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.20</version>
+                <version>${surefire.version}</version>
                    <configuration>
-                       <forkCount>4</forkCount>
+                       <forkCount>${parallel.count}</forkCount>
                        <includes>
                            <include>**/*IT.java</include>
                        </includes>
@@ -110,7 +115,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
-                <version>1.5.0</version>
+                <version>${mvn.exec.version}</version>
                 <executions>
                     <execution>
                         <phase>pre-integration-test</phase>
@@ -120,15 +125,9 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <!--<classpathScope>test</classpathScope>-->
                     <mainClass>com.app.report.ReportMerger</mainClass>
-                    <!--<arguments>-->
-                        <!--<argument>${test.runner}</argument>-->
-                        <!--<argument>${project.build.directory}</argument>-->
-                    <!--</arguments>-->
                 </configuration>
             </plugin>
-
         </plugins>
         <resources>
             <resource>

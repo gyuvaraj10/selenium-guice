@@ -7,7 +7,8 @@
     _driver.remote.capability.browserName=chrome_
     _driver.remote.capability.javascriptEnabled=true_
 3. Write Scenarios in src/test/resources/features folder
-4. Write Step definitions in src/test/java folder  
+4. Write Step definitions in src/test/java folder
+5. Reports are generated in target/cucumber-html-reports folder  
  
  **Run the tests from the Intellij IDEA**
  1. To run the tests from the Intellij IDEA, click on "Run" and then "Edit Configurations"

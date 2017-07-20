@@ -30,6 +30,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>apps.test.runner</groupId>
+            <artifactId>generateRunner-maven-plugin</artifactId>
+            <version>${runner.generator.version}</version>
+        </dependency>
+        <dependency>
             <groupId>info.cukes</groupId>
             <artifactId>cucumber-junit</artifactId>
             <version>${cucumber.version}</version>

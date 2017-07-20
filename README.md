@@ -1,7 +1,7 @@
 **Instructions:**
 **Run the tests from the command line**
 1. Run the following command to execute the tests
-   _mvn test -Dguice.injector-source=com.app.configuration.GuiceModule_
+   _mvn clean install -Dguice.injector-source=com.app.configuration.GuiceModule_
 2. To apply the desired capabilities to the remote webdriver, prefix the desired capabilities key with "driver.remote.capability" in the properties
    Example: 
     _driver.remote.capability.browserName=chrome_

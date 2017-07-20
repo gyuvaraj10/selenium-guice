@@ -20,8 +20,9 @@
 1. Supports Parallel testing on Selenium Grid and on local execution
 2. Supports SauceLabs, Browser Stack
    To run the tests on SauceLabs, simply set the saucelabs/browser stack url to the "test.grid.url" property in "src/main/resources/application.properties" file
-   SauceLabs ex: http://username:access-key@ondemand.saucelabs.com/wd/hub
-   Browser Stack ex: http://username:access-key@hub-cloud.browserstack.com/wd/hub
+   * SauceLabs: http://username:access-key@ondemand.saucelabs.com/wd/hub
+   * Browser Stack: http://username:access-key@hub-cloud.browserstack.com/wd/hub
+   * Selenium Grid: http://selenium-grid-server:4444/wd/hub
 3. Supports inbuild reporting with the help of [serenityrunner](https://github.com/gyuvaraj10/serenityrunner) plugin
 4. Can write less and do more
 5. Can integrate any CI tools (Jenkins, Bamboo, Teamcity, Travis, etc.,)

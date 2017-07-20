@@ -1,5 +1,6 @@
 package com.app.pages;
 
+import com.app.annotations.Page;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import org.openqa.selenium.WebDriver;
@@ -10,6 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 /**
  * Created by Yuvaraj on 19/07/2017.
  */
+@Page
 class BasePage {
 
   @Inject

@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 /**
  * Created by Yuvaraj on 18/07/2017.
  */
-@Retention(RetentionPolicy.CLASS)
+@Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface Page {
 }

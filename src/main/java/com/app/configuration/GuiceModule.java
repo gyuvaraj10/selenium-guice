@@ -35,7 +35,7 @@ public class GuiceModule extends AbstractModule implements InjectorSource {
 
     @Override
     protected void configure() {
-        bind(WebDriver.class).toProvider(DriverProvider.class).asEagerSingleton();
+        bind(WebDriver.class).toProvider(DriverProvider.class).in(ScenarioScoped.class);
         for(Class<?> stepDef: getAllStepDefinitionClasses()){
             bind(stepDef).in(ScenarioScoped.class);
         }

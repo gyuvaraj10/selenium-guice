@@ -42,6 +42,12 @@ public class DriverProvider implements Provider<WebDriver> {
         DesiredCapabilities capability;
         Properties properties = PropertyMap.getInstance().getProperties();
         DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
+        properties.entrySet().forEach(entry -> {
+            if(entry.getKey().toString().contains(DESIRED_CAPABILITIES_KEY)) {
+                String key = entry.getKey().toString().split(DESIRED_CAPABILITIES_KEY)[1];
+                desiredCapabilities.setCapability(key, entry.getValue());
+            }
+        });
         switch (browser.toLowerCase()) {
             case "chrome":  {
                 capability = DesiredCapabilities.chrome();
@@ -53,12 +59,6 @@ public class DriverProvider implements Provider<WebDriver> {
             }
             case "grid": {
                 try {
-                    properties.entrySet().forEach(entry -> {
-                        if(entry.getKey().toString().contains(DESIRED_CAPABILITIES_KEY)) {
-                            String key = entry.getKey().toString().split(DESIRED_CAPABILITIES_KEY)[1];
-                            desiredCapabilities.setCapability(key, entry.getValue());
-                        }
-                    });
                     return new RemoteWebDriver(new URL(gridUrl), desiredCapabilities);
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
@@ -74,12 +74,6 @@ public class DriverProvider implements Provider<WebDriver> {
             }
             case "android": {
                 try {
-                    properties.entrySet().forEach(entry -> {
-                        if (entry.getKey().toString().contains(DESIRED_CAPABILITIES_KEY)) {
-                            String key = entry.getKey().toString().split(DESIRED_CAPABILITIES_KEY)[1];
-                            desiredCapabilities.setCapability(key, entry.getValue());
-                        }
-                    });
                     return new AndroidDriver(new URL(gridUrl), desiredCapabilities);
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -87,12 +81,6 @@ public class DriverProvider implements Provider<WebDriver> {
             }
             case "ios" : {
                 try {
-                    properties.entrySet().forEach(entry -> {
-                        if (entry.getKey().toString().contains(DESIRED_CAPABILITIES_KEY)) {
-                            String key = entry.getKey().toString().split(DESIRED_CAPABILITIES_KEY)[1];
-                            desiredCapabilities.setCapability(key, entry.getValue());
-                        }
-                    });
                     return new IOSDriver<>(new URL(gridUrl), desiredCapabilities);
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -100,12 +88,6 @@ public class DriverProvider implements Provider<WebDriver> {
             }
             case "youi" : {
                 try {
-                    properties.entrySet().forEach(entry -> {
-                        if (entry.getKey().toString().contains(DESIRED_CAPABILITIES_KEY)) {
-                            String key = entry.getKey().toString().split(DESIRED_CAPABILITIES_KEY)[1];
-                            desiredCapabilities.setCapability(key, entry.getValue());
-                        }
-                    });
                     return new YouiEngineDriver<>(new URL(gridUrl), desiredCapabilities);
                 } catch (Exception ex) {
                     ex.printStackTrace();

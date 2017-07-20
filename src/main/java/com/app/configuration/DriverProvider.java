@@ -29,10 +29,6 @@ public class DriverProvider implements Provider<WebDriver> {
     private String browser;
 
     @Inject
-    @Named("webdriver.chrome.driver")
-    private String chromeDriverPath;
-
-    @Inject
     @Named("test.grid.url")
     private String gridUrl;
 

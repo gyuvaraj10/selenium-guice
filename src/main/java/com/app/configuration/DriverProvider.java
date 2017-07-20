@@ -33,6 +33,8 @@ public class DriverProvider implements Provider<WebDriver> {
     @Named("test.grid.url")
     private String gridUrl;
 
+    private static final String DESIRED_CAPABILITIES_KEY = "driver.remote.capability.";
+
     public WebDriver get() {
         DesiredCapabilities capability;
         switch (browser.toLowerCase()) {
@@ -49,8 +51,9 @@ public class DriverProvider implements Provider<WebDriver> {
                     Properties properties = PropertyMap.getInstance().getProperties();
                     DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
                     properties.entrySet().forEach(entry -> {
-                        if(entry.getKey().toString().contains("driver.remote.capability")) {
-                            desiredCapabilities.setCapability((String) entry.getKey(), entry.getValue());
+                        if(entry.getKey().toString().contains(DESIRED_CAPABILITIES_KEY)) {
+                            String key = entry.getKey().toString().split(DESIRED_CAPABILITIES_KEY)[1];
+                            desiredCapabilities.setCapability(key, entry.getValue());
                         }
                     });
                     return new RemoteWebDriver(new URL(gridUrl), desiredCapabilities);
@@ -67,7 +70,8 @@ public class DriverProvider implements Provider<WebDriver> {
                 return new InternetExplorerDriver(capability);
             }
             default: {
-                return new ChromeDriver();
+                capability = DesiredCapabilities.chrome();
+                return new ChromeDriver(capability);
             }
         }
     }

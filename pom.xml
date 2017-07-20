@@ -74,6 +74,34 @@
                     <compilerArgument>-Werror</compilerArgument>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>apps.test.runner</groupId>
+                <artifactId>generateRunner-maven-plugin</artifactId>
+                <version>1.0</version>
+                <executions>
+                    <execution>
+                        <phase>generate-test-sources</phase>
+                        <goals>
+                            <goal>generateSerenityRunner</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <features>src/test/resources/features</features>
+                    <tags>@test</tags>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.20</version>
+                   <configuration>
+                       <forkCount>4</forkCount>
+                       <includes>
+                           <include>**/*IT.java</include>
+                       </includes>
+                   </configuration>
+            </plugin>
         </plugins>
         <resources>
             <resource>

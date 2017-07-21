@@ -8,7 +8,6 @@
 	<version>1.0</version>
 
 	<properties>
-		<serenity.version>1.1.8</serenity.version>
 		<maven.compiler.testTarget>1.8</maven.compiler.testTarget>
 		<webdriver.driver>chrome</webdriver.driver>
 		<maven.compiler.version>3.3</maven.compiler.version>
@@ -19,7 +18,7 @@
 		<reflections.version>0.9.10</reflections.version>
 		<junit.version>4.11</junit.version>
 		<cucumber.report.version>3.9.0</cucumber.report.version>
-		<runner.generator.version>1.2</runner.generator.version>
+		<runner.generator.version>1.0</runner.generator.version>
 		<surefire.version>2.20</surefire.version>
 		<parallel.count>4</parallel.count>
 		<mvn.exec.version>1.5.0</mvn.exec.version>

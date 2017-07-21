@@ -1,9 +1,10 @@
 **Framework Features:**
 1. Supports Parallel testing on Selenium Grid and on local execution
-2. Supports SauceLabs, Browser Stack
+2. Supports SauceLabs, Browser Stack, Testing Bot
    To run the tests on SauceLabs, simply set the saucelabs/browser stack url to the "test.grid.url" property in "src/main/resources/application.properties" file
    * SauceLabs: test.grid.url = http://username:access-key@ondemand.saucelabs.com/wd/hub
    * Browser Stack: test.grid.url = http://username:access-key@hub-cloud.browserstack.com/wd/hub
+   * Testing Bot: test.grid.url = http://username:access-key@hub.testingbot.com/wd/hub
    * Selenium Grid: test.grid.url = http://selenium-grid-server:4444/wd/hub
 3. Supports reporting with the help of [serenityrunner](https://github.com/gyuvaraj10/serenityrunner) plugin
 4. Can write less and do more

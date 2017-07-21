@@ -1,6 +1,7 @@
 package com.app.configuration;
 
 import com.app.annotations.Step;
+import com.app.contexts.ScenarioContext;
 import com.app.utils.PropertyMap;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
@@ -40,6 +41,7 @@ public class GuiceModule extends AbstractModule implements InjectorSource {
             bind(stepDef).in(ScenarioScoped.class);
         }
         getAllSteps().forEach(this::bind);
+        bind(ScenarioContext.class).in(ScenarioScoped.class);
         Names.bindProperties(binder(), getProperties());
         bindListener(Matchers.any(), new PageListner());
     }

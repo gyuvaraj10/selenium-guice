@@ -1,4 +1,4 @@
-package com.app.tests;
+package com.app.tests.web;
 
 import com.app.steps.ApplicationSteps;
 import com.app.steps.SearchSteps;

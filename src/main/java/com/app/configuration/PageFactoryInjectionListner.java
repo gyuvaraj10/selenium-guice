@@ -1,6 +1,7 @@
 package com.app.configuration;
 
 
+import com.app.annotations.Page;
 import com.app.utils.PropertyMap;
 import com.google.inject.Provider;
 import com.google.inject.spi.InjectionListener;
@@ -19,13 +20,14 @@ public class PageFactoryInjectionListner implements InjectionListener{
 
     @Override
     public void afterInjection(Object o) {
-        WebDriver driver = this.provider.get();
-        String browserV = PropertyMap.getInstance().getProperties().getProperty("test.browser.name");
-        if(browserV.contains("android") || browserV.contains("ios") || browserV.contains("youi")) {
-            PageFactory.initElements(new AppiumFieldDecorator(driver), o);
-        }
-        else {
-            PageFactory.initElements(driver, o);
+        if(o.getClass().getDeclaredAnnotation(Page.class) != null) {
+            WebDriver driver = this.provider.get();
+            String browserV = PropertyMap.getInstance().getProperties().getProperty("test.browser.name");
+            if (browserV.contains("android") || browserV.contains("ios") || browserV.contains("youi")) {
+                PageFactory.initElements(new AppiumFieldDecorator(driver), o);
+            } else {
+                PageFactory.initElements(driver, o);
+            }
         }
     }
 }

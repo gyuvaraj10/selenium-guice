@@ -1,7 +1,7 @@
 package com.app.tests.web;
 
-import com.app.steps.ApplicationSteps;
-import com.app.steps.SearchSteps;
+import com.app.pages.HomePage;
+import com.app.pages.SearchResultsPage;
 import com.google.inject.Inject;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
@@ -14,24 +14,24 @@ import cucumber.api.java.en.Then;
 public class SearchResultsStepDef {
 
     @Inject
-    SearchSteps searchSteps;
+    HomePage homePage;
 
     @Inject
-    ApplicationSteps appSteps;
+    private SearchResultsPage searchResultsPage;
 
     @Given("^I launch the amazon application$")
     public void iLaunchTheAmazonApplication() throws Throwable {
-        appSteps.goToHomePage();
+        homePage.goToHomePage();
     }
 
     @Then("^I search the \"([^\"]*)\" in the search box$")
     public void iSearchTheInTheSearchBox(String searchTerm) throws Throwable {
-        searchSteps.searchAnItem(searchTerm);
+        searchResultsPage.typeAndSubmitSearchBox(searchTerm);
     }
 
     @And("^I click the first search result$")
     public void iClickTheFirstSearchResult() throws Throwable {
-        searchSteps.clickSearchItemByIndex(0);
+        searchResultsPage.clickSearchItem(0);
     }
 
     @Then("^I display the price of the first laptop$")

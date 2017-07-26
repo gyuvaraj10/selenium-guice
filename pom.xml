@@ -3,9 +3,9 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>selenium.guice</groupId>
+	<groupId>uk.co.yuvaraj.selenium-guice</groupId>
 	<artifactId>selenium-guice</artifactId>
-	<version>1.0</version>
+	<version>1.1</version>
 
 	<properties>
 		<maven.compiler.testTarget>1.8</maven.compiler.testTarget>
@@ -93,23 +93,6 @@
 					<source>${maven.compiler.testTarget}</source>
 					<target>${maven.compiler.testTarget}</target>
 					<compilerArgument>-Werror</compilerArgument>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>apps.test.runner</groupId>
-				<artifactId>generateRunner-maven-plugin</artifactId>
-				<version>${runner.generator.version}</version>
-				<executions>
-					<execution>
-						<phase>generate-test-sources</phase>
-						<goals>
-							<goal>generateSerenityRunner</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<features>src/test/resources/features</features>
-					<tags>@test</tags>
 				</configuration>
 			</plugin>
 			<plugin>

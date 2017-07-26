@@ -18,7 +18,6 @@
 		<reflections.version>0.9.10</reflections.version>
 		<junit.version>4.11</junit.version>
 		<cucumber.report.version>3.9.0</cucumber.report.version>
-		<runner.generator.version>1.0</runner.generator.version>
 		<surefire.version>2.20</surefire.version>
 		<parallel.count>4</parallel.count>
 		<mvn.exec.version>1.5.0</mvn.exec.version>
@@ -29,11 +28,6 @@
 			<groupId>io.appium</groupId>
 			<artifactId>java-client</artifactId>
 			<version>4.1.2</version>
-		</dependency>
-		<dependency>
-			<groupId>apps.test.runner</groupId>
-			<artifactId>generateRunner-maven-plugin</artifactId>
-			<version>${runner.generator.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>info.cukes</groupId>

@@ -25,10 +25,7 @@ import org.reflections.util.ConfigurationBuilder;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -145,11 +142,14 @@ public class GuiceModule extends AbstractModule implements InjectorSource {
      * @return list of steps classes
      */
     private List<Class<?>> getAllSteps(){
-        ConfigurationBuilder builder = new ConfigurationBuilder();
-        builder.forPackages(stepsPackage).setScanners(new TypeAnnotationsScanner(), new SubTypesScanner());
-        Reflections reflections = new Reflections(builder);
-        Set<Class<?>> stepClasses = reflections.getTypesAnnotatedWith(Step.class);
-        return stepClasses.stream().collect(Collectors.toList());
+        List<Class<?>> stepClasses = new ArrayList<>();
+        if(stepsPackage != null && !stepsPackage.equals("")) {
+            ConfigurationBuilder builder = new ConfigurationBuilder();
+            builder.forPackages(stepsPackage).setScanners(new TypeAnnotationsScanner(), new SubTypesScanner());
+            Reflections reflections = new Reflections(builder);
+            stepClasses = reflections.getTypesAnnotatedWith(Step.class).stream().collect(Collectors.toList());
+        }
+        return stepClasses;
     }
 
     /**
@@ -157,11 +157,14 @@ public class GuiceModule extends AbstractModule implements InjectorSource {
      * @return list of scenario context classes
      */
     private List<Class<?>> getScenarioContexts() {
-        ConfigurationBuilder builder = new ConfigurationBuilder();
-        builder.forPackages(scenarioContextsPackage).setScanners(new SubTypesScanner());
-        Reflections reflections = new Reflections(builder);
-        Set<Class<? extends IScenarioContext>> contextClasses = reflections.getSubTypesOf(IScenarioContext.class);
-        return contextClasses.stream().collect(Collectors.toList());
+        List<Class<?>> contextClasses = new ArrayList<>();
+        if(scenarioContextsPackage != null && !scenarioContextsPackage.equals("")) {
+            ConfigurationBuilder builder = new ConfigurationBuilder();
+            builder.forPackages(scenarioContextsPackage).setScanners(new SubTypesScanner());
+            Reflections reflections = new Reflections(builder);
+            contextClasses = reflections.getSubTypesOf(IScenarioContext.class).stream().collect(Collectors.toList());
+        }
+        return contextClasses;
     }
 
     /**
@@ -169,10 +172,14 @@ public class GuiceModule extends AbstractModule implements InjectorSource {
      * @return list of utility classes
      */
     private List<Class<?>> getAllUtilClasses() {
-        ConfigurationBuilder builder = new ConfigurationBuilder();
-        builder.forPackages(utilsPackage);
-        Reflections reflections = new Reflections(builder);
-        return reflections.getSubTypesOf(Object.class).stream().collect(Collectors.toList());
+        List<Class<?>> utilClasses = new ArrayList<>();
+        if(utilsPackage != null && !utilsPackage.equals("")) {
+            ConfigurationBuilder builder = new ConfigurationBuilder();
+            builder.forPackages(utilsPackage);
+            Reflections reflections = new Reflections(builder);
+            utilClasses = reflections.getSubTypesOf(Object.class).stream().collect(Collectors.toList());
+        }
+        return utilClasses;
     }
     /**
      * returns the properties object

@@ -1,6 +1,7 @@
 package com.app.configuration;
 
 import com.app.annotations.Step;
+import com.app.contexts.IScenarioContext;
 import com.app.contexts.ScenarioContext;
 import com.app.utils.PropertyMap;
 import com.google.inject.AbstractModule;
@@ -28,26 +29,92 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 
 public class GuiceModule extends AbstractModule implements InjectorSource {
+
+    private String stepDefsPackage;
+
+    private String scenarioContextsPackage;
+
+    private String utilsPackage;
+
+    private String stepsPackage;
+
+    /**
+     * Guice Module with default package values
+     */
+    public GuiceModule() {
+        this.stepDefsPackage = "com.app.tests";
+        this.scenarioContextsPackage = "com.app.contexts";
+        this.utilsPackage = "com.app.utils";
+        this.stepsPackage = "com.app.steps";
+    }
+
+    /**
+     * GuiceModule with the specific packages for the user defined framework
+     * @param stepDefsPackage
+     */
+    public GuiceModule(String stepDefsPackage) {
+        this.stepDefsPackage = stepDefsPackage;
+    }
+
+    /**
+     * GuiceModule with the specific packages for the user defined framework
+     * @param stepDefsPackage
+     * @param scenarioContextsPackage
+     */
+    public GuiceModule(String stepDefsPackage, String scenarioContextsPackage) {
+        this.stepDefsPackage = stepDefsPackage;
+        this.scenarioContextsPackage = scenarioContextsPackage;
+    }
+
+    /**
+     * GuiceModule with the specific packages for the user defined framework
+     * @param stepDefsPackage
+     * @param scenarioContextsPackage
+     * @param utilsPackage
+     */
+    public GuiceModule(String stepDefsPackage, String scenarioContextsPackage, String utilsPackage) {
+        this.stepDefsPackage = stepDefsPackage;
+        this.scenarioContextsPackage = scenarioContextsPackage;
+        this.utilsPackage = utilsPackage;
+    }
+
+    /**
+     * GuiceModule with the specific packages for the user defined framework
+     * @param stepDefsPackage
+     * @param scenarioContextsPackage
+     * @param stepsPackage
+     * @param utilsPackage
+     */
+    public GuiceModule(String stepDefsPackage, String scenarioContextsPackage, String stepsPackage, String utilsPackage) {
+        this.stepDefsPackage = stepDefsPackage;
+        this.scenarioContextsPackage = scenarioContextsPackage;
+        this.utilsPackage = utilsPackage;
+        this.stepsPackage = stepsPackage;
+    }
 
     private Injector injector;
 
     @Override
     protected void configure() {
         bind(WebDriver.class).toProvider(DriverProvider.class).in(ScenarioScoped.class);
-        for(Class<?> stepDef: getAllStepDefinitionClasses()){
-            bind(stepDef).in(ScenarioScoped.class);
-        }
-        getAllSteps().forEach(this::bind);
-        bind(ScenarioContext.class).in(ScenarioScoped.class);
+        getAllStepDefinitionClasses().forEach(stepDef->bind(stepDef).in(ScenarioScoped.class));
+        getScenarioContexts().forEach(context->bind(context).in(ScenarioScoped.class));
+        getAllSteps().forEach(step->bind(step).in(ScenarioScoped.class));
+        bind(IScenarioContext.class).to(ScenarioContext.class).in(ScenarioScoped.class);
+        getAllUtilClasses().forEach(this::bind);
         Names.bindProperties(binder(), getProperties());
         bindListener(Matchers.any(), new PageListner());
     }
 
 
-
+    /**
+     * gets all Step Definition Classes
+     * @return list of Step Definition class types
+     */
     private List<Class<?>> getAllStepDefinitionClasses(){
         List<Class<?>> stepDefinitions = new ArrayList<>();
         List<Class<? extends Annotation>> cucumberAnnotations = new ArrayList<>();
@@ -59,7 +126,7 @@ public class GuiceModule extends AbstractModule implements InjectorSource {
         cucumberAnnotations.add(After.class);
         cucumberAnnotations.add(Before.class);
         ConfigurationBuilder builder = new ConfigurationBuilder();
-        builder.forPackages("com.app.tests").setScanners(new MethodAnnotationsScanner());
+        builder.forPackages(stepDefsPackage).setScanners(new MethodAnnotationsScanner());
         Reflections reflections = new Reflections(builder);
         for(Class<? extends Annotation> annotation: cucumberAnnotations){
             Set<Method> methods = reflections.getMethodsAnnotatedWith(annotation);
@@ -73,18 +140,44 @@ public class GuiceModule extends AbstractModule implements InjectorSource {
         return stepDefinitions;
     }
 
+    /**
+     * gets all step classes
+     * @return list of steps classes
+     */
     private List<Class<?>> getAllSteps(){
-        List<Class<?>> steps = new ArrayList<>();
         ConfigurationBuilder builder = new ConfigurationBuilder();
-        builder.forPackages("com.app.steps").setScanners(new TypeAnnotationsScanner(), new SubTypesScanner());
+        builder.forPackages(stepsPackage).setScanners(new TypeAnnotationsScanner(), new SubTypesScanner());
         Reflections reflections = new Reflections(builder);
         Set<Class<?>> stepClasses = reflections.getTypesAnnotatedWith(Step.class);
-        for(Class<?> stepClass: stepClasses){
-            steps.add(stepClass);
-        }
-        return steps;
+        return stepClasses.stream().collect(Collectors.toList());
     }
 
+    /**
+     * gets all the scenario context classes
+     * @return list of scenario context classes
+     */
+    private List<Class<?>> getScenarioContexts() {
+        ConfigurationBuilder builder = new ConfigurationBuilder();
+        builder.forPackages(scenarioContextsPackage).setScanners(new SubTypesScanner());
+        Reflections reflections = new Reflections(builder);
+        Set<Class<? extends IScenarioContext>> contextClasses = reflections.getSubTypesOf(IScenarioContext.class);
+        return contextClasses.stream().collect(Collectors.toList());
+    }
+
+    /**
+     * gets all the util classes
+     * @return list of utility classes
+     */
+    private List<Class<?>> getAllUtilClasses() {
+        ConfigurationBuilder builder = new ConfigurationBuilder();
+        builder.forPackages(utilsPackage);
+        Reflections reflections = new Reflections(builder);
+        return reflections.getSubTypesOf(Object.class).stream().collect(Collectors.toList());
+    }
+    /**
+     * returns the properties object
+     * @return
+     */
     private Properties getProperties() {
         return PropertyMap.getInstance().getLoadedProperties();
     }

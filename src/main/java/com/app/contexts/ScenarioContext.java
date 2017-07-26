@@ -7,7 +7,7 @@ import java.util.Map;
 /**
  * Created by Yuvaraj on 21/07/2017.
  */
-public class ScenarioContext {
+public class ScenarioContext implements IScenarioContext{
 
     private Map<Object, Object> sessionInfo;
 

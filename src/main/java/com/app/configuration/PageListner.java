@@ -20,7 +20,6 @@ public class PageListner implements TypeListener {
         Annotation[] annotations = typeLiteral.getRawType().getDeclaredAnnotations();
         if(annotations.length > 0 && Arrays.stream(annotations)
                     .anyMatch(x->x.annotationType().isAssignableFrom(Page.class))) {
-            System.out.println(typeLiteral.getRawType().getName());
                 typeEncounter.register(new PageFactoryInjectionListner(typeEncounter.getProvider(WebDriver.class)));
             }
     }

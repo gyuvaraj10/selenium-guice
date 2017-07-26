@@ -12,7 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  * Created by Yuvaraj on 19/07/2017.
  */
 @Page
-class BasePage {
+public class BasePage {
 
   @Inject
   private WebDriver driver;
@@ -21,7 +21,11 @@ class BasePage {
   @Named("test.element.wait.seconds")
   private int elementWait;
 
-  public void waitForElement(WebElement element) {
+  /**
+   * waits for the element to be clickable
+   * @param element
+   */
+  public void waitForElementToBeClickable(WebElement element) {
       WebDriverWait wait = getElementWait();
       wait.until(ExpectedConditions.elementToBeClickable(element));
   }

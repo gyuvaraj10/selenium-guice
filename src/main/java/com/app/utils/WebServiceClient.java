@@ -90,6 +90,10 @@ public class WebServiceClient {
                 httpRequest = new HttpTrace(url);
                 break;
             }
+            case "DELETE": {
+                httpRequest = new HttpDelete(url);
+                break;
+            }
             default: {
                 httpRequest = new HttpGet(url);
                 break;

@@ -1,8 +1,6 @@
 package com.app.pages;
 
 import com.app.annotations.Page;
-import com.galenframework.api.Galen;
-import com.galenframework.reports.model.LayoutReport;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import org.openqa.selenium.*;
@@ -12,11 +10,7 @@ import org.openqa.selenium.security.UserAndPassword;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.Properties;
 import java.util.stream.Collectors;
 
 /**

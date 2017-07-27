@@ -21,15 +21,9 @@
 		<surefire.version>2.20</surefire.version>
 		<parallel.count>4</parallel.count>
 		<mvn.exec.version>1.5.0</mvn.exec.version>
-		<galen.version>2.0.3</galen.version>
 	</properties>
 
 	<dependencies>
-		<dependency>
-			<groupId>com.galenframework</groupId>
-			<artifactId>galen-java-support</artifactId>
-			<version>${galen.version}</version>
-		</dependency>
 		<dependency>
 			<groupId>io.appium</groupId>
 			<artifactId>java-client</artifactId>

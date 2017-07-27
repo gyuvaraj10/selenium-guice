@@ -3,11 +3,9 @@ package com.app.configuration;
 import com.app.annotations.Step;
 import com.app.contexts.IScenarioContext;
 import com.app.contexts.ScenarioContext;
+import com.app.galen.StyleValidator;
 import com.app.utils.PropertyMap;
-import com.google.inject.AbstractModule;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-import com.google.inject.Stage;
+import com.google.inject.*;
 import com.google.inject.matcher.Matchers;
 import com.google.inject.name.Names;
 import cucumber.api.guice.CucumberModules;
@@ -103,6 +101,7 @@ public class GuiceModule extends AbstractModule implements InjectorSource {
         getAllSteps().forEach(step->bind(step).in(ScenarioScoped.class));
         bind(IScenarioContext.class).to(ScenarioContext.class).in(ScenarioScoped.class);
         getAllUtilClasses().forEach(this::bind);
+        bind(StyleValidator.class).in(ScenarioScoped.class);
         Names.bindProperties(binder(), getProperties());
         bindListener(Matchers.any(), new PageListner());
     }

@@ -3,12 +3,10 @@ package com.app.configuration;
 import com.app.annotations.Step;
 import com.app.contexts.IScenarioContext;
 import com.app.contexts.ScenarioContext;
-import com.app.galen.StyleValidator;
 import com.app.utils.PropertyMap;
 import com.google.inject.*;
 import com.google.inject.matcher.Matchers;
 import com.google.inject.name.Names;
-import com.google.inject.throwingproviders.ThrowingProviderBinder;
 import cucumber.api.guice.CucumberModules;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -96,17 +94,12 @@ public class GuiceModule extends AbstractModule implements InjectorSource {
 
     @Override
     protected void configure() {
-//        ThrowingProviderBinder.create(binder())
-//                .bind(WebDriverExceptionProvider.class, WebDriver.class)
-//                .to(DriverProvider.class)
-//                .in(ScenarioScoped.class);
         bind(WebDriver.class).toProvider(DriverProvider.class).in(ScenarioScoped.class);
         getAllStepDefinitionClasses().forEach(stepDef->bind(stepDef).in(ScenarioScoped.class));
         getScenarioContexts().forEach(context->bind(context).in(ScenarioScoped.class));
         getAllSteps().forEach(step->bind(step).in(ScenarioScoped.class));
         bind(IScenarioContext.class).to(ScenarioContext.class).in(ScenarioScoped.class);
         getAllUtilClasses().forEach(this::bind);
-//        bind(StyleValidator.class).in(ScenarioScoped.class);
         Names.bindProperties(binder(), getProperties());
         bindListener(Matchers.any(), new PageListner());
     }

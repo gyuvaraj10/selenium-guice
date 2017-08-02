@@ -31,11 +31,11 @@
 			<artifactId>generateRunner-maven-plugin</artifactId>
 			<version>1.0</version>
 		</dependency>
-		<dependency>
-			<groupId>com.galenframework</groupId>
-			<artifactId>galen-java-support</artifactId>
-			<version>${galen.version}</version>
-		</dependency>
+		<!--<dependency>-->
+			<!--<groupId>com.galenframework</groupId>-->
+			<!--<artifactId>galen-java-support</artifactId>-->
+			<!--<version>${galen.version}</version>-->
+		<!--</dependency>-->
 		<dependency>
 			<groupId>io.appium</groupId>
 			<artifactId>java-client</artifactId>

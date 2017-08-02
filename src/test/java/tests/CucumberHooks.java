@@ -23,6 +23,7 @@ public class CucumberHooks {
 
     @Inject
     private WebDriver driver;
+
     TestReport testReport;
     GalenTestInfo ti;
 

@@ -1,9 +1,10 @@
-package java;
+package runners;
 
 import cucumber.api.junit.Cucumber;
 import cucumber.runtime.RuntimeOptions;
 import cucumber.runtime.RuntimeOptionsFactory;
 import cucumber.runtime.junit.JUnitReporter;
+import org.apache.http.annotation.Obsolete;
 import org.junit.runner.notification.RunNotifier;
 import org.junit.runners.model.InitializationError;
 
@@ -13,6 +14,7 @@ import java.lang.reflect.Field;
 /**
  * Created by Yuvaraj on 27/07/2017.
  */
+@Obsolete
 public class CucumberGalenRunner extends Cucumber {
 
     private RuntimeOptionsFactory runtimeOptionsFactory;

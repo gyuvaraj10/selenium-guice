@@ -1,9 +1,6 @@
 package com.app.utils;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.Properties;
 
 public class PropertyMap {
@@ -21,8 +18,9 @@ public class PropertyMap {
 
     public Properties getLoadedProperties() {
         try {
-            properties.load(new FileInputStream(new File(PropertyMap.class.getClass()
-                    .getResource("/application.properties").getPath())));
+            InputStream stream = new FileInputStream(new File(PropertyMap.class.getClass()
+                    .getResource("/application.properties").getPath()));
+            System.getProperties().load(stream);
             properties.putAll(System.getProperties());
             return properties;
         }

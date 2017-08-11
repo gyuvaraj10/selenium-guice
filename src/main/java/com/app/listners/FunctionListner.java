@@ -1,4 +1,4 @@
-package com.app.interceptors;
+package com.app.listners;
 
 import com.app.annotations.Intercept;
 import org.aopalliance.intercept.MethodInterceptor;
@@ -7,7 +7,7 @@ import org.aopalliance.intercept.MethodInvocation;
 /**
  * Created by Yuvaraj on 11/08/2017.
  */
-public class FunctionInterceptor implements IHook, MethodInterceptor {
+public class FunctionListner implements IHook, MethodInterceptor {
 
     @Override
     public Object invoke(MethodInvocation methodInvocation) throws Throwable {

@@ -4,7 +4,7 @@ import com.app.annotations.Intercept;
 import com.app.annotations.Step;
 import com.app.contexts.IScenarioContext;
 import com.app.contexts.ScenarioContext;
-import com.app.interceptors.FunctionInterceptor;
+import com.app.listners.FunctionListner;
 import com.app.utils.PropertyMap;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
@@ -118,7 +118,7 @@ public class GuiceModule extends AbstractModule implements InjectorSource {
         getAllUtilClasses().forEach(this::bind);
         Names.bindProperties(binder(), getProperties());
         bindListener(Matchers.any(), new PageListner());
-        bindInterceptor(Matchers.any(), Matchers.annotatedWith(Intercept.class), new FunctionInterceptor());
+        bindInterceptor(Matchers.any(), Matchers.annotatedWith(Intercept.class), new FunctionListner());
     }
 
 

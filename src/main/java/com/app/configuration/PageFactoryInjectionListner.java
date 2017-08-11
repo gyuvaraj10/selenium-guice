@@ -12,7 +12,7 @@ import org.openqa.selenium.support.PageFactory;
 
 public class PageFactoryInjectionListner implements InjectionListener{
 
-   Provider<WebDriver> provider;
+   private final Provider<WebDriver> provider;
 
    PageFactoryInjectionListner(Provider<WebDriver> injector) {
        this.provider = injector;

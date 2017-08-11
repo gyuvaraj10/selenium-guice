@@ -9,7 +9,7 @@ import java.util.Map;
  */
 public class ScenarioContext implements IScenarioContext{
 
-    private Map<Object, Object> sessionInfo;
+    private final Map<Object, Object> sessionInfo;
 
     public ScenarioContext() {
         sessionInfo = new HashMap<>();

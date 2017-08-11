@@ -4,13 +4,20 @@ import com.app.annotations.Step;
 import com.app.contexts.IScenarioContext;
 import com.app.contexts.ScenarioContext;
 import com.app.utils.PropertyMap;
-import com.google.inject.*;
+import com.google.inject.AbstractModule;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.google.inject.Stage;
 import com.google.inject.matcher.Matchers;
 import com.google.inject.name.Names;
 import cucumber.api.guice.CucumberModules;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
-import cucumber.api.java.en.*;
+import cucumber.api.java.en.And;
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.When;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.But;
 import cucumber.runtime.java.guice.InjectorSource;
 import cucumber.runtime.java.guice.ScenarioScoped;
 import org.openqa.selenium.WebDriver;
@@ -22,13 +29,15 @@ import org.reflections.util.ConfigurationBuilder;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
+import java.util.Set;
 import java.util.stream.Collectors;
-
 
 public class GuiceModule extends AbstractModule implements InjectorSource {
 
-    private String stepDefsPackage;
+    private final String stepDefsPackage;
 
     private String scenarioContextsPackage;
 
@@ -36,10 +45,13 @@ public class GuiceModule extends AbstractModule implements InjectorSource {
 
     private String stepsPackage;
 
+    private Injector injector;
+
     /**
      * Guice Module with default package values
      */
     public GuiceModule() {
+        super();
         this.stepDefsPackage = "com.app.tests";
         this.scenarioContextsPackage = "com.app.contexts";
         this.utilsPackage = "com.app.utils";
@@ -51,6 +63,7 @@ public class GuiceModule extends AbstractModule implements InjectorSource {
      * @param stepDefsPackage
      */
     public GuiceModule(String stepDefsPackage) {
+        super();
         this.stepDefsPackage = stepDefsPackage;
     }
 
@@ -60,6 +73,7 @@ public class GuiceModule extends AbstractModule implements InjectorSource {
      * @param scenarioContextsPackage
      */
     public GuiceModule(String stepDefsPackage, String scenarioContextsPackage) {
+        super();
         this.stepDefsPackage = stepDefsPackage;
         this.scenarioContextsPackage = scenarioContextsPackage;
     }
@@ -71,6 +85,7 @@ public class GuiceModule extends AbstractModule implements InjectorSource {
      * @param utilsPackage
      */
     public GuiceModule(String stepDefsPackage, String scenarioContextsPackage, String utilsPackage) {
+        super();
         this.stepDefsPackage = stepDefsPackage;
         this.scenarioContextsPackage = scenarioContextsPackage;
         this.utilsPackage = utilsPackage;
@@ -84,13 +99,12 @@ public class GuiceModule extends AbstractModule implements InjectorSource {
      * @param utilsPackage
      */
     public GuiceModule(String stepDefsPackage, String scenarioContextsPackage, String stepsPackage, String utilsPackage) {
+        super();
         this.stepDefsPackage = stepDefsPackage;
         this.scenarioContextsPackage = scenarioContextsPackage;
         this.utilsPackage = utilsPackage;
         this.stepsPackage = stepsPackage;
     }
-
-    private Injector injector;
 
     @Override
     protected void configure() {
@@ -124,7 +138,7 @@ public class GuiceModule extends AbstractModule implements InjectorSource {
         Reflections reflections = new Reflections(builder);
         for(Class<? extends Annotation> annotation: cucumberAnnotations){
             Set<Method> methods = reflections.getMethodsAnnotatedWith(annotation);
-            if(methods.size() > 0){
+            if(!methods.isEmpty()){
                 Class<?> stepDefinitionClass = methods.iterator().next().getDeclaringClass();
                 if(!stepDefinitions.contains(stepDefinitionClass)) {
                     stepDefinitions.add(stepDefinitionClass);

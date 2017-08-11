@@ -5,6 +5,7 @@ import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
@@ -26,7 +27,7 @@ public class BasePage {
    */
   public void waitForElementToBeClickable(WebElement element) {
       WebDriverWait wait = getElementWait();
-//      wait.until((Function<? super WebDriver, Object>) ExpectedConditions.elementToBeClickable(element));
+      wait.until(ExpectedConditions.elementToBeClickable(element));
   }
 
   /**

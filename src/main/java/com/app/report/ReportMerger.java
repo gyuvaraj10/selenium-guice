@@ -2,7 +2,6 @@ package com.app.report;
 
 import net.masterthought.cucumber.Configuration;
 import net.masterthought.cucumber.ReportBuilder;
-import net.masterthought.cucumber.Reportable;
 
 import java.io.File;
 import java.util.Arrays;
@@ -14,6 +13,14 @@ import java.util.stream.Collectors;
  */
 public class ReportMerger {
 
+    public ReportMerger() {
+    }
+
+    /**
+     * collects the report files and merges them into single file
+     * @param args
+     */
+    @SuppressWarnings("checkstyle:com.puppycrawl.tools.checkstyle.checks.UncommentedMainCheck")
     public static void main(String[] args){
         File reportOutputDirectory = new File("target");
         List<String> jsonFiles = Arrays.stream(reportOutputDirectory.listFiles())
@@ -23,6 +30,6 @@ public class ReportMerger {
         String projectName = "cucumberProject";
         Configuration configuration = new Configuration(reportOutputDirectory, projectName);
         ReportBuilder reportBuilder = new ReportBuilder(jsonFiles, configuration);
-        Reportable result = reportBuilder.generateReports();
+        reportBuilder.generateReports();
     }
 }

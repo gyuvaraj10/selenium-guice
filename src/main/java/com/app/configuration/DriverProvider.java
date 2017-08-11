@@ -17,12 +17,23 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
-import org.openqa.selenium.winium.*;
+import org.openqa.selenium.winium.WiniumDriver;
+import org.openqa.selenium.winium.WiniumOptions;
+import org.openqa.selenium.winium.DesktopOptions;
+import org.openqa.selenium.winium.StoreAppsOptions;
+import org.openqa.selenium.winium.SilverlightOptions;
+
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Properties;
+import java.util.logging.Logger;
 
 @Singleton
 public class DriverProvider implements Provider<WebDriver> {
+
+    private static final String DESIRED_CAPABILITIES_KEY = "driver.remote.capability.";
+
+    private static final Logger logger = Logger.getLogger(DriverProvider.class.getName());
 
     @Inject
     @Named("test.browser.name")
@@ -32,79 +43,77 @@ public class DriverProvider implements Provider<WebDriver> {
     @Named("test.grid.url")
     private String gridUrl;
 
-    private static final String DESIRED_CAPABILITIES_KEY = "driver.remote.capability.";
-
     public WebDriver get() {
         WebDriver driver = null;
         try {
             switch (browser.toLowerCase()) {
-                case "edge": {
+                case "edge":
                     driver = new EdgeDriver(getEdgeCapabilities());
                     break;
-                }
-                case "chrome": {
+
+                case "chrome":
                     driver = new ChromeDriver(getChromeCapabilities());
                     break;
-                }
-                case "firefox": {
+
+                case "firefox":
                     driver = new FirefoxDriver(getFirefoxCapabilities());
                     break;
-                }
-                case "grid": {
+
+                case "grid":
                     driver = new RemoteWebDriver(new URL(gridUrl), getRemoteDriverCapabilities());
                     break;
-                }
-                case "safari": {
+
+                case "safari":
                     driver = new SafariDriver(getSafariCapabilities());
                     break;
-                }
-                case "ie": {
+
+                case "ie":
                     driver = new InternetExplorerDriver(getIECapabilities());
                     break;
-                }
-                case "android": {
+
+                case "android":
                     driver = new AndroidDriver(new URL(gridUrl), getRemoteDriverCapabilities());
                     break;
-                }
-                case "ios": {
+
+                case "ios":
                     driver = new IOSDriver<>(new URL(gridUrl), getRemoteDriverCapabilities());
                     break;
-                }
-                case "youi": {
+
+                case "youi":
                     driver = new YouiEngineDriver<>(new URL(gridUrl), getRemoteDriverCapabilities());
                     break;
-                }
-                case "windesktop": {
+
+                case "windesktop":
                     driver = new WiniumDriver(getWiniumOptions(browser.toLowerCase()));
                     break;
-                }
-                case "winremotedesktop": {
+
+                case "winremotedesktop":
                     driver = new WiniumDriver(new URL(gridUrl), getWiniumOptions(browser.toLowerCase()));
                     break;
-                }
-                case "winstoreapp": {
+
+                case "winstoreapp":
                     driver = new WiniumDriver(getWiniumOptions(browser.toLowerCase()));
                     break;
-                }
-                case "winremotestoreapp": {
+
+                case "winremotestoreapp":
                     driver = new WiniumDriver(new URL(gridUrl), getWiniumOptions(browser.toLowerCase()));
                     break;
-                }
-                case "winsilverslight": {
+
+                case "winsilverslight":
                     driver = new WiniumDriver(getWiniumOptions(browser.toLowerCase()));
                     break;
-                }
-                case "winremotesilverslight": {
+
+                case "winremotesilverslight":
                     driver = new WiniumDriver(new URL(gridUrl), getWiniumOptions(browser.toLowerCase()));
                     break;
-                }
-                default: {
+
+                default:
                     driver = new ChromeDriver(getChromeCapabilities());
                     break;
-                }
-            }
-        } catch (Exception ex) {
 
+            }
+        } catch (MalformedURLException ex) {
+            logger.severe(ex.getMessage());
         }
         return driver;
     }

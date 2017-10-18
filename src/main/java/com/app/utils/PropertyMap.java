@@ -22,8 +22,13 @@ public final class PropertyMap {
 
     public Properties getLoadedProperties() {
         try {
-            InputStream stream = new FileInputStream(new File(PropertyMap.class.getClass()
-                    .getResource("/application.properties").getPath()));
+            ClassLoader loader = PropertyMap.class.getClassLoader();
+            java.net.URL url = loader.getResource("application.properties");
+            if(loader == null) {
+                loader = ClassLoader.getSystemClassLoader();
+                url = loader.getResource("application.properties");
+            }
+            InputStream stream = new FileInputStream(new File(url.getPath()));
             System.getProperties().load(stream);
             properties.putAll(System.getProperties());
             stream.close();

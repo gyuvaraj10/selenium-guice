@@ -6,8 +6,11 @@ import com.app.utils.PropertyMap;
 import com.google.inject.Provider;
 import com.google.inject.spi.InjectionListener;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
+import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory;
+import org.openqa.selenium.support.pagefactory.ElementLocatorFactory;
 
 
 public class PageFactoryInjectionListner implements InjectionListener{
@@ -22,11 +25,13 @@ public class PageFactoryInjectionListner implements InjectionListener{
     public void afterInjection(Object o) {
         if(o.getClass().getDeclaredAnnotation(Page.class) != null) {
             WebDriver driver = this.provider.get();
-            String browserV = PropertyMap.getInstance().getProperties().getProperty("test.browser.name");
+            String browserV = StringUtils.defaultString(System.getProperty("test.browser.name"), "");
             if (browserV.contains("android") || browserV.contains("ios") || browserV.contains("youi")) {
-                PageFactory.initElements(new AppiumFieldDecorator(driver), o);
+                PageFactory.initElements(new AppiumFieldDecorator(driver) , o);
             } else {
-                PageFactory.initElements(driver, o);
+                ElementLocatorFactory elementLocatorFactory = new DefaultElementLocatorFactory(driver);
+                CustomFieldDecorator customFieldDecorator = new CustomFieldDecorator(elementLocatorFactory);
+                PageFactory.initElements(customFieldDecorator, o);
             }
         }
     }

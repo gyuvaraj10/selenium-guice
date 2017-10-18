@@ -1,6 +1,6 @@
 Feature: Make sure User can search the respective searched product
 
-  @test
+  @test1
   Scenario: Validate the search results are displayed
     Given I launch the amazon application
     Then I search the "laptop" in the search box

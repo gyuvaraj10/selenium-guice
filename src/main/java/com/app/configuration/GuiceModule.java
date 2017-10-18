@@ -22,6 +22,8 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.But;
 import cucumber.runtime.java.guice.InjectorSource;
 import cucumber.runtime.java.guice.ScenarioScoped;
+import org.aspectj.weaver.patterns.SimpleScope;
+import org.junit.internal.runners.TestMethod;
 import org.openqa.selenium.WebDriver;
 import org.reflections.Reflections;
 import org.reflections.scanners.MethodAnnotationsScanner;
@@ -206,7 +208,8 @@ public class GuiceModule extends AbstractModule implements InjectorSource {
     @Override
     public Injector getInjector() {
         if(injector == null) {
-            injector = Guice.createInjector(Stage.PRODUCTION, CucumberModules.SCENARIO, this);
+            injector = Guice.createInjector(Stage.PRODUCTION, CucumberModules.SCENARIO,
+                    new TestMethodModule(), this);
         }
         return injector;
     }

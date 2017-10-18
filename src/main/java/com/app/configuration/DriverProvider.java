@@ -28,7 +28,6 @@ import java.net.URL;
 import java.util.Properties;
 import java.util.logging.Logger;
 
-@Singleton
 public class DriverProvider implements Provider<WebDriver> {
 
     private static final String DESIRED_CAPABILITIES_KEY = "driver.remote.capability.";

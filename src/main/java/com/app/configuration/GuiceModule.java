@@ -209,7 +209,7 @@ public class GuiceModule extends AbstractModule implements InjectorSource {
     public Injector getInjector() {
         if(injector == null) {
             injector = Guice.createInjector(Stage.PRODUCTION, CucumberModules.SCENARIO,
-                    new TestMethodModule(), this);
+                     this);
         }
         return injector;
     }

@@ -1,3 +1,5 @@
+[![BrowserStack Status](https://www.browserstack.com/automate/badge.svg?badge_key=TWx6RnZXc1BvQ0puc0FMMnFLcDhTaWxKMmZLakRONjBvU1ZDT3hsbEJucz0tLTlSUGNnN1BqME8wZktKQmV3c1JuUkE9PQ==--21419b76903473aac16e9881214c219ca66a112c)](https://www.browserstack.com/automate/public-build/TWx6RnZXc1BvQ0puc0FMMnFLcDhTaWxKMmZLakRONjBvU1ZDT3hsbEJucz0tLTlSUGNnN1BqME8wZktKQmV3c1JuUkE9PQ==--21419b76903473aac16e9881214c219ca66a112c)
+
 **Framework Features:**
 1. Supports Parallel testing on Selenium Grid and on local execution
 2. Supports SauceLabs, Browser Stack, Testing Bot
